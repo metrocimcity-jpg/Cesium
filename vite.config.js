@@ -39,10 +39,13 @@ export default defineConfig({
         { src: `${cesiumSource}/Workers`, dest: cesiumBaseUrl },
         { src: `${cesiumSource}/Assets`, dest: cesiumBaseUrl },
         { src: `${cesiumSource}/Widgets`, dest: cesiumBaseUrl },
+        { src: "node_modules/web-ifc/web-ifc.wasm", dest: "web-ifc" },
+        { src: "node_modules/web-ifc/web-ifc-mt.wasm", dest: "web-ifc" },
       ],
     }),
   ],
   optimizeDeps: {
+    exclude: ["web-ifc"],
     entries: [
       "index.html",
       "viewer.html",

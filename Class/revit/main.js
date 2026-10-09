@@ -72,7 +72,10 @@ function setGlobeScene() {
 }
 
 function readOptionalNumber(input) {
-  const raw = String(input.value ?? "").trim();
+  const raw = String(input.value ?? "")
+    .trim()
+    .replace(/\s/g, "")
+    .replace(",", ".");
   if (raw === "") {
     return undefined;
   }
@@ -91,13 +94,13 @@ function readOrigin() {
   const zone = readOptionalNumber(zoneInput);
   const headingDeg = readOptionalNumber(headingInput);
   const northHemisphere = hemisphereInput.value !== "S";
+  const zoneNumber = zone === undefined ? undefined : Math.round(zone);
   if (
     easting === undefined ||
     northing === undefined ||
-    zone === undefined ||
-    !Number.isInteger(zone) ||
-    zone < 1 ||
-    zone > 60
+    zoneNumber === undefined ||
+    zoneNumber < 1 ||
+    zoneNumber > 60
   ) {
     return undefined;
   }
@@ -105,7 +108,7 @@ function readOrigin() {
   const { longitude, latitude } = utmToDegrees(
     easting,
     northing,
-    zone,
+    zoneNumber,
     northHemisphere,
   );
   if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) {
@@ -115,7 +118,7 @@ function readOrigin() {
   return {
     easting,
     northing,
-    zone,
+    zone: zoneNumber,
     northHemisphere,
     longitude,
     latitude,
@@ -156,8 +159,19 @@ function localMatrix() {
   );
 }
 
+function modelRadius(model) {
+  const radius = model.boundingSphere?.radius;
+  return Number.isFinite(radius) && radius > 1 ? radius : 50;
+}
+
 function frameModel(model) {
-  const sphere = Cesium.BoundingSphere.clone(model.boundingSphere);
+  const origin = placedOnGlobe ? readOrigin() : undefined;
+  const sphere = origin
+    ? new Cesium.BoundingSphere(
+        Cesium.Cartesian3.fromDegrees(origin.longitude, origin.latitude, origin.height),
+        modelRadius(model),
+      )
+    : Cesium.BoundingSphere.clone(model.boundingSphere);
   if (!Cesium.defined(sphere) || !(sphere.radius > 0) || !Number.isFinite(sphere.radius)) {
     return;
   }
@@ -166,8 +180,8 @@ function frameModel(model) {
     sphere,
     new Cesium.HeadingPitchRange(
       Cesium.Math.toRadians(40),
-      Cesium.Math.toRadians(placedOnGlobe ? -40 : -25),
-      sphere.radius * (placedOnGlobe ? 4.5 : 2.4),
+      Cesium.Math.toRadians(origin ? -40 : -25),
+      sphere.radius * (origin ? 4.5 : 2.4),
     ),
   );
   viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
@@ -207,7 +221,7 @@ function applyCurrentOrigin(options = {}) {
   const delta = height - lastAppliedHeight;
   updateWgs84Hint(origin);
   if (placedOnGlobe && origin) {
-    currentModel.modelMatrix = globeMatrix(origin);
+    currentModel.modelMatrix = Cesium.Matrix4.clone(globeMatrix(origin));
     setGlobeScene();
   } else {
     placedOnGlobe = false;
@@ -222,6 +236,7 @@ function applyCurrentOrigin(options = {}) {
 
 function placeOnGlobe() {
   if (!currentModel) {
+    window.alert("Wait for the model to finish loading, then click Place on globe.");
     return;
   }
   if (!readOrigin()) {

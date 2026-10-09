@@ -1,0 +1,57 @@
+<style>
+  @import url(../templates/bucket.css);
+  #originPanel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    align-items: flex-end;
+    background: rgba(18, 20, 26, 0.82);
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 6px;
+  }
+  #originPanel label {
+    display: flex;
+    flex-direction: column;
+    font: 12px sans-serif;
+    gap: 2px;
+  }
+  #originPanel input,
+  #originPanel select {
+    width: 128px;
+    padding: 4px 6px;
+  }
+  #originWgs84 {
+    flex-basis: 100%;
+    font: 12px sans-serif;
+    opacity: 0.85;
+  }
+</style>
+<div id="cesiumContainer" class="fullSize"></div>
+<div id="loadingOverlay"><h1>Loading...</h1></div>
+<div id="toolbar">
+  <div id="originPanel">
+    <label>X easting
+      <input id="originEast" type="number" step="any" placeholder="UTM meters" value="610851.04" />
+    </label>
+    <label>Y northing
+      <input id="originNorth" type="number" step="any" placeholder="UTM meters" value="4836995.51" />
+    </label>
+    <label>Elevation
+      <input id="originHeight" type="number" step="any" placeholder="meters" value="0" />
+    </label>
+    <label>UTM zone
+      <input id="originZone" type="number" min="1" max="60" step="1" value="17" />
+    </label>
+    <label>Hemisphere
+      <select id="originHemisphere">
+        <option value="N" selected>North</option>
+        <option value="S">South</option>
+      </select>
+    </label>
+    <label>Heading
+      <input id="originHeading" type="number" step="any" placeholder="deg" value="0" />
+    </label>
+    <div id="originWgs84"></div>
+  </div>
+</div>

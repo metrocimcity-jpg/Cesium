@@ -1,0 +1,7 @@
+title: Revit IFC
+description: Load an IFC exported from Autodesk Revit. Geometry is tessellated in the browser and shown in CesiumJS. Set UTM easting, northing, and elevation to place the model, or inspect it at the local origin.
+labels:
+  - 3D Models
+  - AEC
+  - Showcases
+thumbnail: thumbnail.jpg
