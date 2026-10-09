@@ -1,0 +1,7 @@
+title: Revit
+description: Load a glTF/GLB exported from Autodesk Revit. Place the model with UTM easting, northing, and elevation in meters, or inspect it at the local origin. Use Open GLB for another export.
+labels:
+  - 3D Models
+  - AEC
+  - Showcases
+thumbnail: thumbnail.jpg
