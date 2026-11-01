@@ -48,3 +48,13 @@
 #toolbar label {
   font-size: 14px;
 }
+
+.cesium-credit-logoContainer img[src*="metrocim-ion-credit"],
+.cesium-credit-logoContainer img[src*="ion-credit"] {
+  height: 26px;
+  width: auto;
+}
+
+.cesium-credit-wrapper:has(i) {
+  display: none !important;
+}

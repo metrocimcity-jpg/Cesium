@@ -74,7 +74,7 @@ function loadSample(slug) {
 
   titleEl.textContent = sample.title;
   descEl.textContent = sample.description;
-  document.title = `${sample.title} · Cesium Samples`;
+  document.title = `${sample.title} · MetroCIM`;
   frameEl.src = `/viewer.html?sample=${encodeURIComponent(sample.slug)}`;
 
   for (const item of listEl.querySelectorAll(".sample-item")) {

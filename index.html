@@ -3,14 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Cesium Samples</title>
+    <title>MetroCIM Samples</title>
+    <link rel="icon" href="/runner/metrocim-logo.png" type="image/png" />
     <link rel="stylesheet" href="/runner/app.css" />
   </head>
   <body>
     <div class="app">
       <aside id="sidebar" class="sidebar">
         <div class="sidebar-header">
-          <h1>Cesium Sandcastle</h1>
+          <div class="brand">
+            <img src="/runner/metrocim-logo.png" alt="MetroCIM" class="brand-logo" />
+            <h1>MetroCIM</h1>
+          </div>
           <p id="sample-count">Loading samples…</p>
           <input
             id="sample-search"
@@ -31,7 +35,7 @@
             <p id="sample-description"></p>
           </div>
         </div>
-        <iframe id="sample-frame" title="Cesium sample viewer"></iframe>
+        <iframe id="sample-frame" title="MetroCIM sample viewer"></iframe>
       </section>
     </div>
     <script type="module" src="/runner/app.js"></script>
